@@ -1,3 +1,5 @@
+import 'package:blablacar/model/ride_pref/ride_pref.dart';
+
 import '../dummy_data/dummy_data.dart';
 import '../model/ride/locations.dart';
 import '../model/ride/ride.dart';
@@ -9,7 +11,11 @@ class RidesService {
   //  filter the rides starting from given departure location
   //
   static List<Ride> _filterByDeparture(List<Ride> rides, Location departure) {
-    return [];
+    return [
+      if (Ride.departureLocation == Location){
+        
+      }
+    ];
   }
 
   //
