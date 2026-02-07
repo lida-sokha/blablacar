@@ -1,13 +1,21 @@
-
 import '../../utils/date_time_util.dart';
 import '../user/user.dart';
 import 'locations.dart';
 
-enum RideStatus {
-  created,
-  published,
-  ongoing,
-  finished;
+enum RideStatus { created, published, ongoing, finished }
+
+/// add enum for filter the time
+///
+enum TimeSlot { morning, afternoon, evening, night }
+
+extension RideTimeSlot on Ride {
+  TimeSlot get timeSlot {
+    final hour = departureDate.hour;
+    if (hour >= 6 && hour < 12) return TimeSlot.morning;
+    if (hour >= 12 && hour < 18) return TimeSlot.afternoon;
+    if (hour >= 18 && hour < 22) return TimeSlot.evening;
+    return TimeSlot.night;
+  }
 }
 
 ///
@@ -25,6 +33,11 @@ class Ride {
   final int availableSeats;
   final double pricePerSeat;
 
+  //add the paramter smoking,pet and music
+  final bool smokingAllowed;
+  final bool petAllowed;
+  final bool musicAllowed;
+
   RideStatus status = RideStatus.created;
 
   final List<User> passengers = [];
@@ -37,6 +50,11 @@ class Ride {
     required this.driver,
     required this.availableSeats,
     required this.pricePerSeat,
+
+    //add new
+    required this.smokingAllowed,
+    required this.petAllowed,
+    required this.musicAllowed
   });
 
   void addPassenger(User passenger) {
