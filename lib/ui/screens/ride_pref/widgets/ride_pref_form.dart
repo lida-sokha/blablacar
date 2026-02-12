@@ -85,8 +85,8 @@ void onSearch() {
           child: Column(
             children: [
               ListTile(
-                leading: const Icon(Icons.radio_button_unchecked, color: Colors.grey),
-                title: Text(departure?.name ?? "Departure"),
+                leading: const Icon(Icons.location_on, color: Colors.grey),
+                title: Text(departure?.name ?? "Leaving from"),
                 trailing: IconButton(
                   icon: const Icon(Icons.swap_vert, color: Colors.blue),
                   onPressed: onSwitchLocation,
@@ -96,8 +96,8 @@ void onSearch() {
               const Divider(height: 1),
 
               ListTile(
-                leading: const Icon(Icons.radio_button_unchecked, color: Colors.grey),
-                title: Text(arrival?.name ?? "Arrival"),
+                leading: const Icon(Icons.location_on, color: Colors.grey),
+                title: Text(arrival?.name ?? "Going to"),
                 onTap: () {}, 
               ),
               const Divider(height: 1),
