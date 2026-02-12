@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 enum BlaButtonType {
@@ -26,7 +27,7 @@ class BlaButton extends StatelessWidget {
         final Color textColor = isPrimary ? Colors.white: Colors.blue;
         final BorderSide border = isPrimary ? BorderSide.none : BorderSide(color: Colors.blue);
 
-        return SizeBox(
+        return SizedBox(
             height: 48,
             child: ElevatedButton(
                 onPressed: onPressed,
