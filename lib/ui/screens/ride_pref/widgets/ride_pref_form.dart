@@ -1,7 +1,9 @@
+import 'package:blablacar/ui/screens/ride_pref/location_picker_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../model/ride/locations.dart';
 import '../../../../model/ride_pref/ride_pref.dart';
- 
+import '../ride_pref_screen.dart';
+
 ///
 /// A Ride Preference From is a view to select:
 ///   - A depcarture location
@@ -58,18 +60,31 @@ class _RidePrefFormState extends State<RidePrefForm> {
   }
 
   bool get isvalid =>
-      departure != null &&
-      arrival != null &&
-      departure != arrival; 
+      departure != null && arrival != null && departure != arrival;
 
-void onSearch() {
+  void onSearch() {}
+
+  void handleLocationSelection(bool isDeparture) async {
+    final Location? selectedLocation = await Navigator.push<Location>(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            LocationPickerScreen(title: isDeparture ? "Departure" : "Arrival"),
+      ),
+    );
+    if (selectedLocation != null) {
+      setState(() {
+        if (isDeparture) {
+          departure = selectedLocation;
+        } else {
+          arrival = selectedLocation;
+        }
+      });
+    }
   }
-    
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
-
-
 
   // ----------------------------------
   // Build the widgets
@@ -91,28 +106,31 @@ void onSearch() {
                   icon: const Icon(Icons.swap_vert, color: Colors.blue),
                   onPressed: onSwitchLocation,
                 ),
-                onTap: () {}, 
+                onTap: () => handleLocationSelection(true),
               ),
               const Divider(height: 1),
 
               ListTile(
                 leading: const Icon(Icons.location_on, color: Colors.grey),
                 title: Text(arrival?.name ?? "Going to"),
-                onTap: () {}, 
+                onTap: () => handleLocationSelection(false),
               ),
               const Divider(height: 1),
 
               ListTile(
-                leading: const Icon(Icons.calendar_month_outlined, color: Colors.grey),
-                title: Text("${departureDate.day} Feb"), 
-                onTap: () {}, 
+                leading: const Icon(
+                  Icons.calendar_month_outlined,
+                  color: Colors.grey,
+                ),
+                title: Text("${departureDate.day} Feb"),
+                onTap: () {},
               ),
               const Divider(height: 1),
 
               ListTile(
                 leading: const Icon(Icons.person_outline, color: Colors.grey),
                 title: Text("$requestedSeats"),
-                onTap: () {}, 
+                onTap: () {},
               ),
             ],
           ),
@@ -121,7 +139,7 @@ void onSearch() {
         ElevatedButton(
           onPressed: onSearch,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF00AFF5), 
+            backgroundColor: const Color(0xFF00AFF5),
             foregroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -130,13 +148,13 @@ void onSearch() {
               ),
             ),
             minimumSize: const Size(double.infinity, 50),
-            elevation: 0, 
+            elevation: 0,
           ),
           child: const Text(
             "Search",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-        )
+        ),
       ],
     );
   }
