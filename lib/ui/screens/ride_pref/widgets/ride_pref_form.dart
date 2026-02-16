@@ -2,7 +2,7 @@ import 'package:blablacar/ui/screens/ride_pref/location_picker_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../model/ride/locations.dart';
 import '../../../../model/ride_pref/ride_pref.dart';
-import './blabutton.dart';
+import '../../../widgets/actions/blabutton.dart';
 
 ///
 /// A Ride Preference From is a view to select:

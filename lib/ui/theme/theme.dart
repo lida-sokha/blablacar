@@ -82,3 +82,7 @@ ThemeData appTheme =  ThemeData(
   scaffoldBackgroundColor: Colors.white,
 );
  
+
+class BlaSize {
+  static const double icon = 24;
+}
