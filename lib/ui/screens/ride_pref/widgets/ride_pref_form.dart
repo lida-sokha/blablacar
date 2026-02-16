@@ -2,7 +2,7 @@ import 'package:blablacar/ui/screens/ride_pref/location_picker_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../model/ride/locations.dart';
 import '../../../../model/ride_pref/ride_pref.dart';
-import '../ride_pref_screen.dart';
+import './blabutton.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -136,25 +136,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
           ),
         ),
 
-        ElevatedButton(
-          onPressed: onSearch,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF00AFF5),
-            foregroundColor: Colors.white,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ),
-            ),
-            minimumSize: const Size(double.infinity, 50),
-            elevation: 0,
-          ),
-          child: const Text(
-            "Search",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ),
+        BlaButton(label: "Search", onPressed: onSearch)
       ],
     );
   }
