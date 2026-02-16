@@ -1,8 +1,10 @@
-import 'package:blablacar/ui/screens/ride_pref/location_picker_screen.dart';
+import 'package:blablacar/ui/widgets/inputs/location_picker.dart';
+import 'package:blablacar/utils/date_time_util.dart';
 import 'package:flutter/material.dart';
 import '../../../../model/ride/locations.dart';
 import '../../../../model/ride_pref/ride_pref.dart';
 import '../../../widgets/actions/blabutton.dart';
+import '../widgets/ride_prefs_input.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -62,30 +64,52 @@ class _RidePrefFormState extends State<RidePrefForm> {
   bool get isvalid =>
       departure != null && arrival != null && departure != arrival;
 
-  void onSearch() {}
+  void onSubmit() {}
 
-  void handleLocationSelection(bool isDeparture) async {
+  void onDeparturePressed() async {
     final Location? selectedLocation = await Navigator.push<Location>(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            LocationPickerScreen(title: isDeparture ? "Departure" : "Arrival"),
+            BlaLocationPicker(),
       ),
     );
     if (selectedLocation != null) {
       setState(() {
-        if (isDeparture) {
-          departure = selectedLocation;
-        } else {
-          arrival = selectedLocation;
-        }
+        departure = selectedLocation;
       });
     }
   }
+
+  void onArrivalPressed() async {
+    final Location? selectedLocation = await Navigator.push<Location>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BlaLocationPicker(),
+      ),
+    );
+    if (selectedLocation != null) {
+      setState(() {
+        arrival = selectedLocation;
+      });
+    }
+  }
+
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
 
+  String get departureLabel =>
+      departure != null ? departure!.name : "Leaving from";
+  String get arrivalLabel => arrival != null ? arrival!.name : "Going to";
+
+  bool get showDeparturePLaceHolder => departure == null;
+  bool get showArrivalPLaceHolder => arrival == null;
+
+  String get dateLabel => DateTimeUtils.formatDateTime(departureDate);
+  String get numberLabel => requestedSeats.toString();
+
+  bool get switchVisible => arrival != null && departure != null;
   // ----------------------------------
   // Build the widgets
   // ----------------------------------
@@ -99,44 +123,41 @@ class _RidePrefFormState extends State<RidePrefForm> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              ListTile(
-                leading: const Icon(Icons.location_on, color: Colors.grey),
-                title: Text(departure?.name ?? "Leaving from"),
-                trailing: IconButton(
-                  icon: const Icon(Icons.swap_vert, color: Colors.blue),
-                  onPressed: onSwitchLocation,
-                ),
-                onTap: () => handleLocationSelection(true),
+              RidePrefInput(
+                title: departureLabel,
+                onPressed: onDeparturePressed,
+                leftIcon: Icons.location_on,
+                isPlaceHolder: showDeparturePLaceHolder,
+                rightIcon: switchVisible ? Icons.swap_vert : null,
+                onRightIconPressed: switchVisible ? onSwitchLocation : null,
               ),
               const Divider(height: 1),
 
-              ListTile(
-                leading: const Icon(Icons.location_on, color: Colors.grey),
-                title: Text(arrival?.name ?? "Going to"),
-                onTap: () => handleLocationSelection(false),
+              RidePrefInput(
+                title: arrivalLabel,
+                onPressed: onArrivalPressed,
+                leftIcon: Icons.location_on,
+                isPlaceHolder: showArrivalPLaceHolder,
               ),
               const Divider(height: 1),
 
-              ListTile(
-                leading: const Icon(
-                  Icons.calendar_month_outlined,
-                  color: Colors.grey,
-                ),
-                title: Text("${departureDate.day} Feb"),
-                onTap: () {},
+              RidePrefInput(
+                title: dateLabel,
+                leftIcon: Icons.calendar_month,
+                onPressed: () => {},
               ),
               const Divider(height: 1),
 
-              ListTile(
-                leading: const Icon(Icons.person_outline, color: Colors.grey),
-                title: Text("$requestedSeats"),
-                onTap: () {},
+              RidePrefInput(
+                title: numberLabel,
+                onPressed: () => {},
+                leftIcon: Icons.person_2_outlined,
               ),
             ],
           ),
         ),
 
-        BlaButton(label: "Search", onPressed: onSearch)
+        BlaButton(label: "Search", onPressed: onSubmit),
       ],
     );
   }
