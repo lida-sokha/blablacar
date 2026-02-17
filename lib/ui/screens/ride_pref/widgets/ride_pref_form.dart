@@ -6,6 +6,7 @@ import '../../../../model/ride_pref/ride_pref.dart';
 import '../../../widgets/actions/blabutton.dart';
 import '../widgets/ride_prefs_input.dart';
 import '../../../../utils/animations_util.dart';
+import '../ride_screen.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -65,7 +66,23 @@ class _RidePrefFormState extends State<RidePrefForm> {
   bool get isvalid =>
       departure != null && arrival != null && departure != arrival;
 
-  void onSubmit() {}
+  void onSubmit() {
+    if (isvalid) {
+      RidePref selectedRidePref = RidePref(
+        departure: departure!,
+        arrival: arrival!,
+        departureDate: departureDate,
+        requestedSeats: requestedSeats,
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RideScreen(ridePref: selectedRidePref),
+        ),
+      );
+    }
+  }
 
   void onDeparturePressed() async {
     final Location? selectedLocation = await Navigator.push<Location>(
