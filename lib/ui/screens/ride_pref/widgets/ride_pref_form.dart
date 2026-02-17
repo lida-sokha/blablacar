@@ -7,6 +7,7 @@ import '../../../widgets/actions/blabutton.dart';
 import '../widgets/ride_prefs_input.dart';
 import '../../../../utils/animations_util.dart';
 import '../ride_screen.dart';
+import '../../../widgets/display/bla_divider.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -148,7 +149,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
                 rightIcon: switchVisible ? Icons.swap_vert : null,
                 onRightIconPressed: switchVisible ? onSwitchLocation : null,
               ),
-              const Divider(height: 1),
+              BlaDivider(),
 
               RidePrefInput(
                 title: arrivalLabel,
@@ -156,14 +157,14 @@ class _RidePrefFormState extends State<RidePrefForm> {
                 leftIcon: Icons.location_on,
                 isPlaceHolder: showArrivalPLaceHolder,
               ),
-              const Divider(height: 1),
+              BlaDivider(),
 
               RidePrefInput(
                 title: dateLabel,
                 leftIcon: Icons.calendar_month,
                 onPressed: () => {},
               ),
-              const Divider(height: 1),
+              BlaDivider(),
 
               RidePrefInput(
                 title: numberLabel,
