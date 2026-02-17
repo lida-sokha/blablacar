@@ -48,7 +48,7 @@ class _BlaSeatNumberState extends State<BlaSeatNumber> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.close),
+          icon: Icon(Icons.close, color: BlaColors.primary,),
         ),
       ),
       body: Padding(
@@ -74,7 +74,7 @@ class _BlaSeatNumberState extends State<BlaSeatNumber> {
                     Icons.remove_circle_outline,
                     size: 40,
                     color: requestedSeats > 1
-                        ? Colors.blue
+                        ? BlaColors.primary 
                         : BlaColors.greyLight,
                   ),
                 ),
@@ -89,7 +89,7 @@ class _BlaSeatNumberState extends State<BlaSeatNumber> {
                   icon: Icon(
                     Icons.add_circle_outline,
                     size: 40,
-                    color: Colors.blue,
+                    color: BlaColors.primary 
                   ),
                 ),
               ],
