@@ -1,3 +1,4 @@
+import 'package:blablacar/ui/widgets/inputs/bla_seat_number.dart';
 import 'package:blablacar/ui/widgets/inputs/location_picker.dart';
 import 'package:blablacar/utils/date_time_util.dart';
 import 'package:flutter/material.dart';
@@ -113,6 +114,20 @@ class _RidePrefFormState extends State<RidePrefForm> {
     }
   }
 
+  void onSeatPress() async {
+    final int? selectedSeats = await Navigator.push<int>(
+      context,
+      AnimationUtils.createBottomToTopRoute(
+        BlaSeatNumber(initRidePref: widget.initRidePref),
+      ),
+    );
+    if (selectedSeats != null) {
+      setState(() {
+        requestedSeats = selectedSeats;
+      });
+    }
+  }
+
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
@@ -168,7 +183,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
               RidePrefInput(
                 title: numberLabel,
-                onPressed: () => {},
+                onPressed: onSeatPress,
                 leftIcon: Icons.person_2_outlined,
               ),
             ],
