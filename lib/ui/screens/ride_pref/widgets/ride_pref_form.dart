@@ -5,6 +5,7 @@ import '../../../../model/ride/locations.dart';
 import '../../../../model/ride_pref/ride_pref.dart';
 import '../../../widgets/actions/blabutton.dart';
 import '../widgets/ride_prefs_input.dart';
+import '../../../../utils/animations_util.dart';
 
 ///
 /// A Ride Preference From is a view to select:
@@ -69,9 +70,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void onDeparturePressed() async {
     final Location? selectedLocation = await Navigator.push<Location>(
       context,
-      MaterialPageRoute(
-        builder: (context) =>
-            BlaLocationPicker(),
+      AnimationUtils.createBottomToTopRoute(
+        BlaLocationPicker(initLocation: departure),
       ),
     );
     if (selectedLocation != null) {
@@ -84,8 +84,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void onArrivalPressed() async {
     final Location? selectedLocation = await Navigator.push<Location>(
       context,
-      MaterialPageRoute(
-        builder: (context) => BlaLocationPicker(),
+      AnimationUtils.createBottomToTopRoute(
+        BlaLocationPicker(initLocation: arrival),
       ),
     );
     if (selectedLocation != null) {
